@@ -103,13 +103,6 @@ async function isLoadMore() {
     if (currentPage < countPage) {
       loadMoreBtn.classList.remove('is-hidden');
       showLoader();
-      // const images = await getImages(
-      //   name,
-      //   MY_KEY,
-      //   currentPage + 1,
-      //   numberOfImagesPerPage
-      // );
-      // gallery.insertAdjacentHTML('beforeend', renderPhoto(images.hits));
       gallery.innerHTML += renderPhoto(images.hits);
       makeSmoothScrolling();
       closeLoader();
@@ -117,8 +110,6 @@ async function isLoadMore() {
   } catch (error) {
     console.log(error);
   }
-  // currentPage++;
-  // closeLoader();
 }
 
 function errorChecking(name) {
