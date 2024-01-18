@@ -104,6 +104,7 @@ async function isLoadMore() {
       loadMoreBtn.classList.remove('is-hidden');
       showLoader();
       gallery.innerHTML += renderPhoto(images.hits);
+      refreshPage.refresh();
       makeSmoothScrolling();
       closeLoader();
     }
