@@ -26,6 +26,7 @@ let name = '';
 async function onSearch(event) {
   event.preventDefault();
 
+  loadMoreBtn.classList.add('is-hidden');
   gallery.innerHTML = '';
   name = input.value.trim();
 
@@ -107,7 +108,7 @@ async function isLoadMore() {
       gallery.innerHTML += renderPhoto(images.hits);
       refreshPage.refresh();
       makeSmoothScrolling();
-      closeLoader();
+      // closeLoader();
     }
   } catch (error) {
     console.log(error);
@@ -117,7 +118,7 @@ async function isLoadMore() {
 function errorChecking(name) {
   if (name === '') {
     closeLoader();
-
+    loadMoreBtn.classList.add('is-hidden');
     throw iziToast.error({
       title: 'Error',
       timeout: '1000',

@@ -79,11 +79,11 @@ img {
   font-weight: 400;
 }
 
-/* .submitForm {
+.submitForm {
   margin-left: auto;
   display: flex;
   gap: 8px;
-} */
+}
 
 .is-hidden {
   opacity: 0;
@@ -103,6 +103,7 @@ img {
 }
 
 .loadMore {
+  display: block;
   transition: 0.3s;
   margin-top: 32px;
   outline: none;
@@ -118,7 +119,7 @@ img {
   font-weight: 500;
   line-height: 1.5;
   letter-spacing: 0.04em;
-  margin-right: auto;
+  margin: 0 auto;
   cursor: pointer;
 }
 
@@ -155,7 +156,7 @@ img {
   height: 48px;
   background: #de3500;
   transform: rotateX(65deg) rotate(45deg);
-  left: 40%;
+  left: 49%;
   color: #fff;
   animation: layers1 1s linear infinite alternate;
 }
