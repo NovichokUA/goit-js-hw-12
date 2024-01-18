@@ -18,6 +18,7 @@ form.addEventListener('submit', onSearch);
 
 closeLoader();
 
+loadMoreBtn.classList.add('is-hidden');
 let currentPage = 1;
 const numberOfImagesPerPage = 40;
 let name = '';
