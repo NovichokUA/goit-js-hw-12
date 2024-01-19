@@ -5,6 +5,7 @@ import axios from 'axios';
 import { renderPhoto } from './partalsJs/marcup.js';
 import { getImages } from './partalsJs/getImages.js';
 import { refreshPage } from './partalsJs/simpleBox.js';
+import { makeSmoothScrolling } from './partalsJs/smoothScroll.js';
 
 const form = document.querySelector('.submitForm');
 const input = document.querySelector('.submitInput');
@@ -60,14 +61,23 @@ async function onSearch(event) {
     }
 
     gallery.insertAdjacentHTML('beforeend', renderPhoto(images.hits));
-    closeLoader();
+
     refreshPage.refresh();
 
     if (images.totalHits > numberOfImagesPerPage) {
-      loadMoreBtn.classList.remove('is-hidden');
+      showLoadMoreBtn();
     }
   } catch (error) {
-    console.log(error);
+    iziToast.error({
+      title: 'Error',
+      timeout: '2000',
+      message: error,
+      messageColor: '#FAFAFB',
+      backgroundColor: '#EF4040',
+      position: 'topRight',
+    });
+  } finally {
+    closeLoader();
   }
 }
 
@@ -92,7 +102,7 @@ async function isLoadMore() {
     let countPage = Math.ceil(totalHits / numberOfImagesPerPage);
 
     if (currentPage === countPage) {
-      loadMoreBtn.classList.add('is-hidden');
+      hiddenLoadMoreBtn();
       closeLoader();
       gallery.innerHTML += renderPhoto(images.hits);
       makeSmoothScrolling();
@@ -109,24 +119,31 @@ async function isLoadMore() {
     }
 
     if (currentPage < countPage) {
-      loadMoreBtn.classList.remove('is-hidden');
       gallery.innerHTML += renderPhoto(images.hits);
       refreshPage.refresh();
-      makeSmoothScrolling();
-      closeLoader();
     }
   } catch (error) {
-    console.log(error);
+    iziToast.error({
+      title: 'Error',
+      timeout: '2000',
+      message: error,
+      messageColor: '#FAFAFB',
+      backgroundColor: '#EF4040',
+      position: 'topRight',
+    });
+  } finally {
+    makeSmoothScrolling();
+    closeLoader();
   }
 }
 
 function errorChecking(name) {
   if (name === '') {
     closeLoader();
-    loadMoreBtn.classList.add('is-hidden');
+    hiddenLoadMoreBtn();
     throw iziToast.error({
       title: 'Error',
-      timeout: '1000',
+      timeout: '1500',
       message:
         'Sorry, there are no images matching your search query. Please try again!',
       messageColor: '#FAFAFB',
@@ -137,20 +154,16 @@ function errorChecking(name) {
 }
 
 function showLoader() {
-  loader.style.display = 'block';
+  loader.classList.remove('is-hidden');
 }
 function closeLoader() {
-  loader.style.display = 'none';
+  loader.classList.add('is-hidden');
 }
 
-function makeSmoothScrolling() {
-  const galleryItemHeight = document
-    .querySelector('.gallery li')
-    .getBoundingClientRect().height;
+function showLoadMoreBtn() {
+  loadMoreBtn.classList.remove('is-hidden');
+}
 
-  window.scrollBy({
-    top: galleryItemHeight * 2,
-    left: 0,
-    behavior: 'smooth',
-  });
+function hiddenLoadMoreBtn() {
+  loadMoreBtn.classList.add('is-hidden');
 }
